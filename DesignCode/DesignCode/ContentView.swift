@@ -26,8 +26,6 @@ struct ContentView: View {
                     Animation
                         .default
                         .delay(0.05)
-//                        .speed(2)
-//                        .repeatCount(3, autoreverses: false)
             )
             
             BackCardView(title: "Web Development", subTitle: "Python/PHP/Angular etc.")
