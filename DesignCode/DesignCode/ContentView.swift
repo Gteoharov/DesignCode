@@ -30,7 +30,7 @@ struct ContentView: View {
 //                        .repeatCount(3, autoreverses: false)
             )
             
-            BackCardView()
+            BackCardView(title: "Web Development", subTitle: "Python/PHP/Angular etc.")
                 .frame(width: showCard ? 300 : 340, height: 220)
                 .background(show ? Color("card3") : Color("card4"))
                 .cornerRadius(20)
@@ -45,7 +45,7 @@ struct ContentView: View {
                 .blendMode(.hardLight)
                 .animation(.easeInOut(duration: 0.6))
             
-            BackCardView()
+            BackCardView(title: "Android Development", subTitle: "Kotlin")
                 .frame(width: 340, height: 220)
                 .background(show ? Color("card4") : Color("card3"))
                 .cornerRadius(20)
@@ -63,7 +63,6 @@ struct ContentView: View {
             CardView()
                 .frame(width: showCard ? 375.0 : 340.0, height: 220.0)
                 .background(Color.black)
-//                .cornerRadius(20)
                 .clipShape(RoundedRectangle(cornerRadius: showCard ? 30 : 20, style: .continuous))
                 .shadow(radius: 20)
                 .offset(x: viewState.width, y: viewState.height)
@@ -84,7 +83,6 @@ struct ContentView: View {
                 }
             )
             
-            Text("\(bottomState.height)").offset(y: -300)
             
             BottomCardView()
                 .offset(x: 0, y: showCard ? 360 : 1000)
@@ -150,9 +148,29 @@ struct CardView: View {
 }
 
 struct BackCardView: View {
+    @State var title: String
+    @State var subTitle: String
+    
     var body: some View {
         VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    Text(subTitle)
+                        .foregroundColor(Color("accent"))
+                }
+                Spacer()
+                Image("Logo1")
+            }
+            .padding()
             Spacer()
+            Image("Card1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 300, height: 110, alignment: .top)
         }
     }
 }
@@ -182,7 +200,12 @@ struct BottomCardView: View {
                 .cornerRadius(3)
                 .opacity(0.15)
             
-            Text("This certificate is proof that Meng To has achieved the UI Design course with approval from a Design+Code instructor.")
+            Text(
+            "App Factory Ltd, established in 2013 are iOS and Android App design and development specialists. Jointly owned by Lance Nelson (British) and Atanas Tonchev (Bulgarian) we are based in Sofia and Plovdiv in Bulgaria.\n\n\n"
+                +
+            "We offer all the services required for a successful app project from initial architecture, design, UI/UX, native iOS and Android development, api development, web design and development, Quality Assurance and end user customer support. Our bespoke client solutions are flexible and focused while offering our clients exceptional value.\n\n\n"
+                +
+            "All our App Factory team are fluent in English and enjoy an attractive package which includes work at home and flexible working arrangements. Our ethos is based on team work, learning, communicating and applying our extensive app and website expertise to help your business plan succeed. We aim high and have built a reputation for setting, and delivering, demanding targets. Our rapid growth is driven by our client's requirements and by their referral of us to others. ")
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
