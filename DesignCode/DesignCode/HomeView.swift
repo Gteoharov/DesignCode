@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
     
     @Binding var showProfile: Bool
+    @State var showUpdate = false
     
     var body: some View {
         VStack {
@@ -21,6 +22,22 @@ struct HomeView: View {
                 Spacer()
                 
                 AvatarView(showProfile: $showProfile)
+                
+                Button(action: { self.showUpdate.toggle() }) {
+                    Image(systemName: "bell")
+                        .renderingMode(.original)
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(width: 36, height: 36)
+                        .background(Color.white)
+                        .clipShape(Circle())
+                        .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                }
+                .sheet(isPresented: $showUpdate) {
+                    ContentView()
+                }
+                
+                
             }
             .padding(.horizontal)
             .padding(.leading, 14)
@@ -31,9 +48,9 @@ struct HomeView: View {
                     ForEach(SectionData) { item in
                         GeometryReader { geometry in
                             SectionView(section: item)
-                            .rotation3DEffect(Angle(degrees:
-                                Double(geometry.frame(in: .global).minX - 30) / -20
-                            ), axis: (x: 0, y: 10.0, z: 0))
+                                .rotation3DEffect(Angle(degrees:
+                                    Double(geometry.frame(in: .global).minX - 30) / -20
+                                ), axis: (x: 0, y: 10.0, z: 0))
                         }
                         .frame(width: 275, height: 275)
                     }
@@ -80,7 +97,7 @@ struct SectionView: View {
         .frame(width: 275, height: 275)
         .background(section.color)
         .cornerRadius(30)
-        .shadow(color: section.color.opacity(0.3), radius: 20, x: 0, y: 20)
+        .shadow(color: section.color.opacity(0.7), radius: 20, x: 0, y: 20)
     }
 }
 
