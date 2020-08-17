@@ -82,7 +82,7 @@ struct ContentView: View {
             )
             
             
-            BottomCardView()
+            BottomCardView(show: $showCard)
                 .offset(x: 0, y: showCard ? 360 : 1000)
                 .offset(y: bottomState.height)
                 .blur(radius: show ? 20 : 0)
@@ -191,6 +191,8 @@ struct TitleView: View {
 }
 
 struct BottomCardView: View {
+    @Binding var show: Bool
+    
     var body: some View {
         VStack(spacing: 20) {
             Rectangle()
@@ -199,14 +201,30 @@ struct BottomCardView: View {
                 .opacity(0.15)
             
             Text(
-            "App Factory Ltd, established in 2013 are iOS and Android App design and development specialists. Jointly owned by Lance Nelson (British) and Atanas Tonchev (Bulgarian) we are based in Sofia and Plovdiv in Bulgaria.\n\n\n"
-                +
-            "We offer all the services required for a successful app project from initial architecture, design, UI/UX, native iOS and Android development, api development, web design and development, Quality Assurance and end user customer support. Our bespoke client solutions are flexible and focused while offering our clients exceptional value.\n\n\n"
-                +
-            "All our App Factory team are fluent in English and enjoy an attractive package which includes work at home and flexible working arrangements. Our ethos is based on team work, learning, communicating and applying our extensive app and website expertise to help your business plan succeed. We aim high and have built a reputation for setting, and delivering, demanding targets. Our rapid growth is driven by our client's requirements and by their referral of us to others. ")
+                "App Factory Ltd, established in 2013 are iOS and Android App design and development specialists. Jointly owned by Lance Nelson (British) and Atanas Tonchev (Bulgarian) we are based in Sofia and Plovdiv in Bulgaria."
+            )
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
+            
+            HStack(spacing: 20.0) {
+                RingView(color1: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), color2: #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), width: 88, height: 88, percent: 66, show: $show)
+                    .animation(Animation.easeInOut.delay(0.35))
+                
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Text("SwiftUI")
+                        .fontWeight(.bold)
+                    Text("12 of 12 sections completed\n10 hours spent so far")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .lineSpacing(4)
+                }
+                .padding(20)
+                .background(Color.white)
+                .cornerRadius(20)
+                .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 10)
+            }
+            
             Spacer()
         }
         .padding(.top, 8)

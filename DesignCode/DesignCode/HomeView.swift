@@ -16,8 +16,8 @@ struct HomeView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Watching")
-                    .font(.system(size: 28, weight: .bold))
+                Text("Watching")                 
+                    .modifier(CustomFontModifier(size: 34))
                 
                 Spacer()
                 
@@ -36,12 +36,18 @@ struct HomeView: View {
                 .sheet(isPresented: $showUpdate) {
                     UpdateList()
                 }
-                
-                
             }
             .padding(.horizontal)
             .padding(.leading, 14)
             .padding(.top, 30)
+            
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                WatchRingsView()
+                    .padding(.horizontal, 30)
+                    .padding(.bottom, 30)
+            }
+            
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
@@ -115,3 +121,41 @@ let SectionData = [Section(title: "Prototype designs in SwiftUI", text: "18 sect
                    Section(title: "SwiftUI Advanced", text: "20 sections", logo: "Logo1", image: Image(uiImage: #imageLiteral(resourceName: "Card4")), color: Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)))
     
 ]
+
+struct WatchRingsView: View {
+    var body: some View {
+        HStack(spacing: 30.0) {
+            HStack(spacing: 12) {
+                RingView(color1: #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), color2: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), width: 44, height: 44, percent: 68, show: .constant(true))
+                
+                VStack(alignment: .leading) {
+                    Text("6 minutes left").bold().modifier(FontModifier(style: .subheadline))
+                    Text("Watched 10 mins today").modifier(FontModifier(style: .caption))
+                }
+                .modifier(FontModifier())
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12) {
+                RingView(color1: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), color2: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1), width: 32, height: 32, percent: 54, show: .constant(true))
+                
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+            
+            HStack(spacing: 12) {
+                RingView(color1: #colorLiteral(red: 0, green: 0.6891224384, blue: 0.9984436631, alpha: 1), color2: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1), width: 32, height: 32, percent: 22, show: .constant(true))
+                
+            }
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(20)
+            .modifier(ShadowModifier())
+        }
+    }
+}
