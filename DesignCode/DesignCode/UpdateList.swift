@@ -68,6 +68,7 @@ struct UpdateList_Previews: PreviewProvider {
     }
 }
 
+
 struct Update: Identifiable {
     var id = UUID()
     var image: String
