@@ -17,18 +17,19 @@ struct TabBar: View {
             }
             ContentView().tabItem {
                 Image(systemName: "rectangle.stack.fill")
+                    .resizable()
+                    .frame(width: 150, height: 150)
                 Text("Certificates")
             }
         }
-        
     }
 }
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TabBar().previewDevice("iPhone 11 Pro Max")
-             TabBar().previewDevice("iPhone 11")
+            TabBar().previewDevice("iPhone 11")
+            TabBar().previewDevice("iPhone 7")
         }
     }
 }
