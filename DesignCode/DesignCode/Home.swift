@@ -25,7 +25,7 @@ struct Home: View {
                     VStack {
                         LinearGradient(gradient: Gradient(colors: [Color("background2"), Color.blue]), startPoint: .top, endPoint: .bottom)
                             .frame(height: 200)
-                                    
+                            .cornerRadius(15, corners: [.bottomLeft, .bottomRight])
                         Spacer()
                     }
                     .background(Color.white)
