@@ -15,41 +15,43 @@ struct HomeView: View {
     @Binding var showContent: Bool
     
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text("Watching")
-                        .modifier(CustomFontModifier(size: 34))
-                    
-                    Spacer()
-                    
-                    AvatarView(showProfile: $showProfile)
-                    
-                    Button(action: { self.showUpdate.toggle() }) {
-                        Image(systemName: "bell")
-                            .renderingMode(.original)
-                            .font(.system(size: 16, weight: .medium))
-                            .frame(width: 36, height: 36)
-                            .background(Color.white)
-                            .clipShape(Circle())
-                            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                            .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+        VStack {
+            ScrollView {
+                VStack {
+                    HStack {
+                        Text("Remote")
+                            .modifier(CustomFontModifier(size: 34))
+                        
+                        Spacer()
+                        
+                        AvatarView(showProfile: $showProfile)
+                        
+                        Button(action: { self.showUpdate.toggle() }) {
+                            Image(systemName: "bell")
+                                .renderingMode(.original)
+                                .font(.system(size: 16, weight: .medium))
+                                .frame(width: 36, height: 36)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                        }
+                        .sheet(isPresented: $showUpdate) {
+                            UpdateList()
+                        }
                     }
-                    .sheet(isPresented: $showUpdate) {
-                        UpdateList()
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.leading, 14)
-                .padding(.top, 30)
-                
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    WatchRingsView()
-                        .padding(.horizontal, 30)
-                        .padding(.bottom, 30)
-                        .onTapGesture {
-                            self.showContent = true
+                    .padding(.horizontal)
+                    .padding(.leading, 14)
+                    .padding(.top, 30)
+                    
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        WatchRingsView()
+                            .padding(.horizontal, 30)
+                            .padding(.bottom, 30)
+                            .onTapGesture {
+                                self.showContent = true
+                        }
                     }
                 }
                 
@@ -80,7 +82,7 @@ struct HomeView: View {
                 .offset(y: -60)
                 
                 SectionView(section: SectionData[2], width: screen.width - 60, height: 270)
-                .offset(y: -60)
+                    .offset(y: -60)
                 
                 Spacer()
             }
@@ -177,5 +179,11 @@ struct WatchRingsView: View {
             .cornerRadius(20)
             .modifier(ShadowModifier())
         }
+    }
+}
+
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
 }

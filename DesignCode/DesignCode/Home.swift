@@ -23,18 +23,21 @@ struct Home: View {
                 .padding(.top, 44)
                 .background(
                     VStack {
-                        LinearGradient(gradient: Gradient(colors: [Color("background2"), Color.white]), startPoint: .top, endPoint: .bottom)
+                        LinearGradient(gradient: Gradient(colors: [Color("background2"), Color.blue]), startPoint: .top, endPoint: .bottom)
                             .frame(height: 200)
+                                    
                         Spacer()
                     }
                     .background(Color.white)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                
+                
                 .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
                 .rotation3DEffect(Angle(degrees: showProfile ? Double(viewState.height / 10) - 10 : 0), axis: (x: 10.0 , y: 0, z: 0))
                 .offset(y: showProfile ? -450 : 0)
                 .scaleEffect(showProfile ? 0.9 : 1)
                 .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+                
                 .edgesIgnoringSafeArea(.all)
             
             MenuView()
