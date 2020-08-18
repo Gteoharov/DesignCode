@@ -63,6 +63,9 @@ struct CourseView: View {
                             Image(systemName: "xmark")
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.white)
+                                .onTapGesture {
+                                    self.show = false
+                            }
                         }
                         .frame(width: 36, height: 36)
                         .background(Color.black)
@@ -86,7 +89,7 @@ struct CourseView: View {
             .shadow(color: Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)).opacity(0.3), radius: 20, x: 0, y: 20)
             
             .onTapGesture {
-                self.show.toggle()
+                self.show = true
             }
         }
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
