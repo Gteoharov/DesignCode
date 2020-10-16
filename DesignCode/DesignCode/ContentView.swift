@@ -69,11 +69,13 @@ struct ContentView: View {
                 .animation(.spring(response: 0.3, dampingFraction: 0.4, blendDuration: 0))
                 .onTapGesture {
                     self.showCard.toggle()
+                    self.showFull = false
             }
             .gesture(
                 DragGesture().onChanged { value in
                     self.viewState = value.translation
                     self.show = true
+                    self.showCard = false
                 }
                 .onEnded { value in
                     self.viewState = .zero
@@ -206,15 +208,14 @@ struct BottomCardView: View {
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .lineSpacing(4)
-            
             HStack(spacing: 20.0) {
-                RingView(color1: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), color2: #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), width: 88, height: 88, percent: 66, show: $show)
-                    .animation(Animation.easeInOut.delay(0.35))
+                RingView(color1: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), color2: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), width: 88, height: 88, percent: 78, show: $show)
+                    .animation(Animation.easeInOut)
                 
                 VStack(alignment: .leading, spacing: 8.0) {
                     Text("SwiftUI")
                         .fontWeight(.bold)
-                    Text("12 of 12 sections completed\n10 hours spent so far")
+                    Text("12 of 12 sections completed\n10hours spend so far")
                         .font(.footnote)
                         .foregroundColor(.gray)
                         .lineSpacing(4)
@@ -222,7 +223,7 @@ struct BottomCardView: View {
                 .padding(20)
                 .background(Color.white)
                 .cornerRadius(20)
-                .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 10)
+                .shadow(color: Color.blue.opacity(0.2), radius: 20, x: 0, y: 10)
             }
             
             Spacer()

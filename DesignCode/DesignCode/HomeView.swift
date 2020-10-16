@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @Binding var showProfile: Bool
     @State var showUpdate = false
     @Binding var showContent: Bool
@@ -79,7 +78,7 @@ struct HomeView: View {
                 .offset(y: -60)
                 
                 SectionView(section: sectionData[2], width: screen.width - 60, height: 275)
-                    .offset(y: -60)
+                .offset(y: -60)
                 
                 Spacer()
             }

@@ -9,9 +9,21 @@
 import SwiftUI
 
 struct CourseList: View {
+    @State var show = false
+    @State var show2 = false
+    
     var body: some View {
-        VStack {
-            CourseView()
+        ScrollView {
+            VStack(spacing: 30) {
+                CourseView(show: $show)
+//                GeometryReader { geometry in
+//                    CourseView(show: self.$show2)
+//                        .offset(y: self.show2 ? -geometry.frame(in: .global).minY : 0)
+//                }
+//                .frame(height: show2 ? screen.height : 280)
+//                .frame(maxWidth: show2 ? .infinity : screen.width - 60)
+            }
+            .frame(width: screen.width)
         }
     }
 }
@@ -23,7 +35,7 @@ struct CourseList_Previews: PreviewProvider {
 }
 
 struct CourseView: View {
-    @State var show = false
+    @Binding var show: Bool
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -39,7 +51,7 @@ struct CourseView: View {
             }
             .padding(30)
             .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280, alignment: .top)
-            .offset(y: show ? screen.height / 2 : 0)
+            .offset(y: show ? 460 : 0)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
@@ -83,7 +95,7 @@ struct CourseView: View {
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
     //        .frame(width: show ? screen.width : screen.width - 60, height: show ? screen.height : 280)
-                .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? screen.height / 2 : 280)
+            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
             .background(Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)).opacity(0.3), radius: 20, x: 0, y: 20)

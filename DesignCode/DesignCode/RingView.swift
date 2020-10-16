@@ -13,7 +13,7 @@ struct RingView: View {
     var color2 = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
     var width: CGFloat = 300
     var height: CGFloat = 300
-    var percent: CGFloat = 32
+    var percent: CGFloat = 88
     @Binding var show: Bool
     
     
@@ -35,7 +35,7 @@ struct RingView: View {
                 .rotation3DEffect(Angle(degrees: 180), axis: (x: 1, y: 0, z: 0))
                 .frame(width: width, height: height)
                 .shadow(color: Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)).opacity(0.1), radius: 3 * multiplier, x: 0, y: 3 * multiplier)
-            
+                
             Text("\(Int(percent))%")
                 .font(.system(size: 14 * multiplier))
                 .fontWeight(.bold)

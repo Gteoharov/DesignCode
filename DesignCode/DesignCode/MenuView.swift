@@ -51,12 +51,6 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews:  PreviewProvider {
-    static var previews: some View {
-        MenuView()
-    }
-}
-
 struct MenuRow: View {
     var title: String
     var icon: String
@@ -72,5 +66,11 @@ struct MenuRow: View {
                 .font(.system(size: 20, weight: .bold, design: .default))
                 .frame(width: 120, alignment: .leading)
         }
+    }
+}
+
+struct MenuView_Previews:  PreviewProvider {
+    static var previews: some View {
+        MenuView()
     }
 }
