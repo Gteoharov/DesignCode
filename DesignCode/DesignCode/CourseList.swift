@@ -9,31 +9,52 @@
 import SwiftUI
 
 struct CourseList: View {
-    @State var show = false
-    @State var show2 = false
     @State var courses = courseData
+    @State var active = false
+    @State var activeIndex: Int = -1
+    @State var activeView = CGSize.zero
     
     var body: some View {
         
-        ScrollView {
-            VStack(spacing: 30) {
-                Text("AppFactory")
-                    .font(.largeTitle).bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 30)
-                    .padding(.top, 30)
-                
-                ForEach(courses.indices, id: \.self) { index in
-                    GeometryReader { geometry in
-                        CourseView(show: $courses[index].show, course: courses[index])
+        ZStack {
+            Color.black.opacity(Double(activeView.height / 500))
+                .animation(.linear)
+                .edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                VStack(spacing: 30) {
+                    Text("AppFactory")
+                        .font(.largeTitle).bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading, 30)
+                        .padding(.top, 30)
+                        .blur(radius: active ? 20 : 0)
+                    
+                    ForEach(courses.indices, id: \.self) { index in
+                        GeometryReader { geometry in
+                            CourseView(
+                                show: $courses[index].show,
+                                active: $active,
+                                course: courses[index],
+                                index: index,
+                                activeIndex: $activeIndex,
+                                activeView: $activeView
+                            )
                             .offset(y: courses[index].show ? -geometry.frame(in: .global).minY : 0)
+                            .opacity(activeIndex != index && active ? 0 : 1)
+                            .scaleEffect(activeIndex != index && active ? 0.5 : 1)
+                            .offset(x: activeIndex != index && active ? screen.width : 0)
+                        }
+                        .frame(height: 280)
+                        .frame(maxWidth: courses[index].show ? .infinity : screen.width - 60)
+                        .zIndex(self.courses[index].show ? 1 : 0)
                     }
-                    .frame(height: 280)
-                    .frame(maxWidth: courses[index].show ? .infinity : screen.width - 60)
                 }
+                .frame(width: screen.width)
+                .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
             }
-            .frame(width: screen.width)
-            .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+            .statusBar(hidden: active ? true : false)
+            .animation(.linear)
         }
     }
 }
@@ -46,7 +67,11 @@ struct CourseList_Previews: PreviewProvider {
 
 struct CourseView: View {
     @Binding  var show: Bool
+    @Binding var active: Bool
     var course: Course
+    var index: Int
+    @Binding var activeIndex: Int
+    @Binding var activeView: CGSize
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -107,13 +132,60 @@ struct CourseView: View {
             .background(Color(course.color))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color(course.color).opacity(0.3), radius: 20, x: 20, y: 20)
-            .onTapGesture(perform: {
+            .gesture(
+                show ?
+                    DragGesture().onChanged { value in
+                        guard value.translation.height < 300 && value.translation.height > 0 else { return }
+                        self.activeView = value.translation
+                        
+                    }
+                    .onEnded { value in
+                        if self.activeView.height > 50 {
+                            self.show = false
+                            self.active = false
+                            self.activeIndex = -1
+                        }
+                        self.activeView = .zero
+                    }
+                    : nil
+            )
+            .onTapGesture() {
                 self.show.toggle()
-            })
-            
+                self.active.toggle()
+                if self.show {
+                    self.activeIndex = self.index
+                } else {
+                    self.activeIndex = -1
+                }
+            }
+            if show {
+//                CourseDetail(course: course, show: $show, active: $active, activeIndex: $activeIndex)
+//                    .background(Color.white)
+//                    .animation(nil)
+            }
         }
         .frame(height: show ? screen.height : 280)
+        .scaleEffect(1 - (self.activeView.height / 1000))
+        .rotation3DEffect(Angle(degrees: Double(self.activeView.height) / 5), axis: (x: 0, y: 10.0, z: 0))
+        .hueRotation(Angle(degrees: Double(self.activeView.height)))
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+        .gesture(
+            show ?
+                DragGesture().onChanged { value in
+                    guard value.translation.height < 300 && value.translation.height > 0 else { return }
+                    self.activeView = value.translation
+                    
+                }
+                .onEnded { value in
+                    if self.activeView.height > 50 {
+                        self.show = false
+                        self.active = false
+                        self.activeIndex = -1
+                    }
+                    self.activeView = .zero
+                }
+                : nil
+        )
         .edgesIgnoringSafeArea(.all)
     }
 }
