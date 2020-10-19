@@ -43,39 +43,38 @@ struct Home: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
                 .onTapGesture {
                     self.showProfile.toggle()
-            }
-            .gesture(
-                DragGesture().onChanged { value in
-                    self.viewState = value.translation
                 }
-                .onEnded { value in
-                    if self.viewState.height > 50 {
-                        self.showProfile = false
+                .gesture(
+                    DragGesture().onChanged { value in
+                        self.viewState = value.translation
                     }
-                    self.viewState = .zero
-                }
-            )
+                    .onEnded { value in
+                        if self.viewState.height > 50 {
+                            self.showProfile = false
+                        }
+                        self.viewState = .zero
+                    }
+                )
             
             if showContent {
                 Color.white.edgesIgnoringSafeArea(.all)
                 
-                CourseList()
+                ContentView()
                 
                 VStack {
-                    Spacer()
-                    
                     HStack {
                         Spacer()
                         
                         Image(systemName: "xmark")
-                        .frame(width: 36, height: 36)
-                        .foregroundColor(.white)
-                        .background(Color.black)
+                            .frame(width: 36, height: 36)
+                            .foregroundColor(.white)
+                            .background(Color.black)
                             .clipShape(Circle())
                     }
+                    Spacer()
                     
                 }
-                .offset(x: -16, y: -16)
+                .offset(x: -16, y: 0)
                 .transition(.move(edge: .top))
                 .animation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0))
                 .onTapGesture {
